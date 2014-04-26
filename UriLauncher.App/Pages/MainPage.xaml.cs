@@ -8,8 +8,9 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using UriLauncher.App.Resources;
+using PhoneKit.Framework.Support;
 
-namespace UriLauncher.App
+namespace UriLauncher.App.Pages
 {
     public partial class MainPage : PhoneApplicationPage
     {
@@ -18,8 +19,28 @@ namespace UriLauncher.App
         {
             InitializeComponent();
 
+            // register startup actions
+            StartupActionManager.Instance.Register(5, ActionExecutionRule.Equals, () =>
+            {
+                FeedbackManager.Instance.StartFirst();
+            });
+            StartupActionManager.Instance.Register(10, ActionExecutionRule.Equals, () =>
+            {
+                FeedbackManager.Instance.StartSecond();
+            });
+
             // Beispielcode zur Lokalisierung der ApplicationBar
             //BuildLocalizedApplicationBar();
+        }
+
+        /// <summary>
+        /// When the page is navigated to.
+        /// </summary>
+        /// <param name="e">The event args.</param>
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            // fire startup events
+            StartupActionManager.Instance.Fire();
         }
 
         // Beispielcode zur Erstellung einer lokalisierten ApplicationBar

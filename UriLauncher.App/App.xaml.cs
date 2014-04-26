@@ -7,6 +7,9 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using UriLauncher.App.Resources;
+using BugSense;
+using BugSense.Core.Model;
+using PhoneKit.Framework.Support;
 
 namespace UriLauncher.App
 {
@@ -23,8 +26,8 @@ namespace UriLauncher.App
         /// </summary>
         public App()
         {
-            // Globaler Handler für nicht abgefangene Ausnahmen.
-            UnhandledException += Application_UnhandledException;
+            // Initialize BugSense
+            BugSenseHandler.Instance.InitAndStartSession(new ExceptionManager(Current), RootFrame, "57c04a48");
 
             // Standard-XAML-Initialisierung
             InitializeComponent();
@@ -84,19 +87,11 @@ namespace UriLauncher.App
         // Code, der bei einem Navigationsfehler ausgeführt wird
         private void RootFrame_NavigationFailed(object sender, NavigationFailedEventArgs e)
         {
+            ErrorReportingManager.Instance.Save(e.Exception, AppResources.ApplicationVersion, AppResources.ResourceLanguage);
+
             if (Debugger.IsAttached)
             {
                 // Navigationsfehler. Unterbrechen und Debugger öffnen
-                Debugger.Break();
-            }
-        }
-
-        // Code, der bei Ausnahmefehlern ausgeführt wird
-        private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
-        {
-            if (Debugger.IsAttached)
-            {
-                // Ein Ausnahmefehler ist aufgetreten. Unterbrechen und Debugger öffnen
                 Debugger.Break();
             }
         }
@@ -114,7 +109,7 @@ namespace UriLauncher.App
 
             // Frame erstellen, aber noch nicht als RootVisual festlegen. Dadurch kann der Begrüßungsbildschirm
             // aktiv bleiben, bis die Anwendung bereit für das Rendern ist.
-            RootFrame = new PhoneApplicationFrame();
+            RootFrame = new TransitionFrame();
             RootFrame.Navigated += CompleteInitializePhoneApplication;
 
             // Navigationsfehler behandeln
@@ -136,6 +131,10 @@ namespace UriLauncher.App
 
             // Dieser Handler wird nicht mehr benötigt und kann entfernt werden
             RootFrame.Navigated -= CompleteInitializePhoneApplication;
+
+            ErrorReportingManager.Instance.CheckAndReport(
+                "apps@bsautermeister.de",
+                "[URI Launcher] Error Report");
         }
 
         private void CheckForResetNavigation(object sender, NavigationEventArgs e)

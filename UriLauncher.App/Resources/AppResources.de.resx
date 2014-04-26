@@ -122,19 +122,19 @@
     <comment>Controls the FlowDirection for all elements in the RootFrame. Set to the traditional direction of this resource file's language</comment>
   </data>
   <data name="ResourceLanguage" xml:space="preserve">
-    <value>de-DE</value>
+    <value>de</value>
     <comment>Controls the Language and ensures that the font for all elements in the RootFrame aligns with the app's language. Set to the language code of this resource file's language.</comment>
   </data>
   <data name="AboutTitle" xml:space="preserve">
-    <value>about</value>
+    <value>hilfe</value>
     <comment>AboutPage</comment>
   </data>
   <data name="ApplicationAuthor" xml:space="preserve">
-    <value>by Benjamin Sautermeister</value>
+    <value>von Benjamin Sautermeister</value>
     <comment>AboutPage</comment>
   </data>
   <data name="ApplicationDescription" xml:space="preserve">
-    <value>This application helps you to remember all your every day stuff. With no frills.</value>
+    <value>Diese Anwendung hilft dir dabei jegliche Dinge des Alltags zu merken. Ohne irgendwelchen Schnickschnack.</value>
     <comment>AboutPage</comment>
   </data>
   <data name="ApplicationTitle" xml:space="preserve">
@@ -146,11 +146,11 @@
     <comment>General</comment>
   </data>
   <data name="Contributors" xml:space="preserve">
-    <value>Contributors</value>
+    <value>Unterstützt von</value>
     <comment>AboutPage</comment>
   </data>
   <data name="FeedbackBodyText" xml:space="preserve">
-    <value>[Your feedback here]
+    <value>[Dein Feedback hier]
 
 
 ---------------------------------
@@ -167,65 +167,65 @@ Application Version: {4}
     <comment>FeedbackDialogControl</comment>
   </data>
   <data name="FeedbackMessageText" xml:space="preserve">
-    <value>Sorry to hear you didn't want to rate our dev tool.
+    <value>Schade dass Sie unser Tool nicht bewerten wollen.
 
-Tell us about your experience or suggest how we can make it even better.</value>
+Erzählen Sie uns von Ihren Erfahrungen oder teilen Sie uns Vorschläge mit, damit wir unseren URI Launcher noch besser machen können.</value>
     <comment>FeedbackDialogControl</comment>
   </data>
   <data name="FeedbackNoText" xml:space="preserve">
-    <value>no thanks</value>
+    <value>nein danke</value>
     <comment>FeedbackDialogControl</comment>
   </data>
   <data name="FeedbackSubject" xml:space="preserve">
-    <value>URI Launcher Customer Feedback </value>
+    <value>URI Launcher Feedback </value>
     <comment>FeedbackDialogControl</comment>
   </data>
   <data name="FeedbackTitleText" xml:space="preserve">
-    <value>Can we make it better?</value>
+    <value>Können wir es besser machen?</value>
     <comment>FeedbackDialogControl</comment>
   </data>
   <data name="FeedbackYesText" xml:space="preserve">
-    <value>give feedback</value>
+    <value>feedback</value>
     <comment>FeedbackDialogControl</comment>
   </data>
   <data name="MoreApps" xml:space="preserve">
-    <value>more apps</value>
+    <value>mehr apps</value>
     <comment>AboutPage</comment>
   </data>
   <data name="PrivacyInfo" xml:space="preserve">
-    <value>privacy info</value>
+    <value>datenschutz informationen</value>
     <comment>About Page</comment>
   </data>
   <data name="RateAndReview" xml:space="preserve">
-    <value>rate and review</value>
+    <value>bewerten und kritik schreiben</value>
     <comment>AboutPage</comment>
   </data>
   <data name="RatingMessage10Text" xml:space="preserve">
-    <value>You look to be getting a lot of use out of our application!
+    <value>Es scheint als ob Sie unser URI Launcher nützlich finden!
 
-Why not give us a 5 star rating to show your appreciation?</value>
+Warum geben Sie uns nicht eine 5 Sterne Bewertung um zu zeigen, dass Sie unsere Arbeit zu schätzen wissen?</value>
     <comment>FeedbackDialogControl</comment>
   </data>
   <data name="RatingMessage5Text" xml:space="preserve">
-    <value>We'd love you to rate our app 5 stars
+    <value>Wir würden uns freuen, wenn Sie unsere App mit 5 Sternen bewerten.
 
-Showing us some love on the store helps us to continue to work on the app and make things even better!</value>
+Das würde uns sehr motivieren um die App noch besser zu machen!</value>
     <comment>FeedbackDialogControl</comment>
   </data>
   <data name="RatingNoText" xml:space="preserve">
-    <value>no thanks</value>
+    <value>nein danke</value>
     <comment>FeedbackDialogControl</comment>
   </data>
   <data name="RatingTitleText" xml:space="preserve">
-    <value>Enjoying our tool?</value>
+    <value>Gefällt Ihnen unser Tool?</value>
     <comment>FeedbackDialogControl</comment>
   </data>
   <data name="RatingYesText" xml:space="preserve">
-    <value>rate 5 stars</value>
+    <value>bewerten</value>
     <comment>FeedbackDialogControl</comment>
   </data>
   <data name="SupportAndFeedback" xml:space="preserve">
-    <value>support and feedback</value>
+    <value>hilfe und feedback</value>
     <comment>About Page</comment>
   </data>
 </root>

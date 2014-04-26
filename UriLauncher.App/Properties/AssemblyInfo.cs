@@ -7,12 +7,12 @@ using System.Resources;
 // Attributgruppe gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
 // die einer Assembly zugeordnet sind.
 [assembly: AssemblyTitle("UriLauncher.App")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A URI Laucher Dev Tool")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("bsautermeister")]
 [assembly: AssemblyProduct("UriLauncher.App")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("bsautermeister.de")]
 [assembly: AssemblyCulture("")]
 
 // Durch Festlegen von ComVisible auf "false" werden die Typen in dieser Assembly 
@@ -34,4 +34,4 @@ using System.Resources;
 // übernehmen, indem Sie "*" wie folgt verwenden:
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: NeutralResourcesLanguageAttribute("de-DE")]
+[assembly: NeutralResourcesLanguageAttribute("en")]
