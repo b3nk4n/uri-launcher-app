@@ -35,7 +35,10 @@ namespace UriLauncher.App.Controls
             MoreAppsSearchTerms = "Benjamin Sautermeister";
 
             // contributors
-            ContributorsListVisibility = System.Windows.Visibility.Collapsed;
+            ContributorsListVisibility = System.Windows.Visibility.Visible;
+            IList<ContributorModel> contributors = new List<ContributorModel>();
+            contributors.Add(new ContributorModel("/Assets/Images/icon.png", "John Caserta from The Noun Project"));
+            SetContributorsList(contributors);
         }
     }
 }
