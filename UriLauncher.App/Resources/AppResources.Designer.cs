@@ -79,7 +79,7 @@ namespace UriLauncher.App.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This application helps you to remember all your every day stuff. With no frills. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die This developer tool makes it easy to test file and URI associations in you apps. ähnelt.
         /// </summary>
         public static string ApplicationDescription {
             get {

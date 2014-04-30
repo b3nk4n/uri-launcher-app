@@ -134,7 +134,7 @@
     <comment>AboutPage</comment>
   </data>
   <data name="ApplicationDescription" xml:space="preserve">
-    <value>Diese Anwendung hilft dir dabei jegliche Dinge des Alltags zu merken. Ohne irgendwelchen Schnickschnack.</value>
+    <value>Dieses Entwickler-Tool ermöglicht das einfache Testen von Datei- und URI-Assoziationen deiner Apps.</value>
     <comment>AboutPage</comment>
   </data>
   <data name="ApplicationTitle" xml:space="preserve">
