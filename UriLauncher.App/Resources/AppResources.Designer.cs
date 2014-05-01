@@ -373,6 +373,15 @@ namespace UriLauncher.App.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die uri association schemes list ähnelt.
+        /// </summary>
+        public static string ReferencesTitle {
+            get {
+                return ResourceManager.GetString("ReferencesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die LeftToRight ähnelt.
         /// </summary>
         public static string ResourceFlowDirection {

@@ -284,4 +284,8 @@ Showing us some love on the store helps us to continue to work on the app and ma
     <value>This launch configuration is pinned to the start screen. Do you want to remove the old one and repin the tile?</value>
     <comment>ItemPage</comment>
   </data>
+  <data name="ReferencesTitle" xml:space="preserve">
+    <value>uri association schemes list</value>
+    <comment>MainPage</comment>
+  </data>
 </root>

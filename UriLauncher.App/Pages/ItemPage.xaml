@@ -57,7 +57,7 @@
                 <TextBlock Text="{Binding Path=LocalizedResources.Title, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextSubtleStyle}" />
                 <toolkit:PhoneTextBox x:Name="TextBoxTitle" Text="{Binding Title}" />
                 <TextBlock Text="{Binding Path=LocalizedResources.Uri, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextSubtleStyle}" />
-                <toolkit:PhoneTextBox x:Name="TextBoxUri" Text="{Binding Uri}" Hint="launcher:example?param=1"
+                <toolkit:PhoneTextBox x:Name="TextBoxUri" Text="{Binding Uri}" Hint="appName:example?param=1"
                          InputScope="Url" TextWrapping="Wrap"/>
             </StackPanel>
         </Grid>

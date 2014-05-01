@@ -284,4 +284,8 @@ Das würde uns sehr motivieren um die App noch besser zu machen!</value>
     <value>Diese Start-Konfiguration ist auf die Startseite gepinnt. Soll die alte Live-Kachel entfernt und die neue Konfiguration auf die Startseite gepinnt werden?</value>
     <comment>ItemPage</comment>
   </data>
+  <data name="ReferencesTitle" xml:space="preserve">
+    <value>schema-liste</value>
+    <comment>MainPage</comment>
+  </data>
 </root>

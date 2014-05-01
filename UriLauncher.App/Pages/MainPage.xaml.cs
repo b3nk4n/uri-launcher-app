@@ -13,6 +13,7 @@ using System.Windows.Media;
 using UriLauncher.App.ViewModels;
 using Windows.System;
 using System.Threading.Tasks;
+using Microsoft.Phone.Tasks;
 
 namespace UriLauncher.App.Pages
 {
@@ -107,12 +108,22 @@ namespace UriLauncher.App.Pages
             ApplicationBar.Buttons.Add(appBarButton);
 
             // about
-            ApplicationBarMenuItem appBarMenuItem = new ApplicationBarMenuItem(AppResources.AboutTitle);
-            appBarMenuItem.Click += (s, e) =>
+            ApplicationBarMenuItem appBarReferencesMenuItem = new ApplicationBarMenuItem(AppResources.ReferencesTitle);
+            appBarReferencesMenuItem.Click += (s, e) =>
+            {
+                var browser = new WebBrowserTask();
+                browser.Uri = new Uri("http://developer.nokia.com/community/wiki/URI_Association_Schemes_List", UriKind.Absolute);
+                browser.Show();
+            };
+            ApplicationBar.MenuItems.Add(appBarReferencesMenuItem);
+
+            // about
+            ApplicationBarMenuItem appBarAboutMenuItem = new ApplicationBarMenuItem(AppResources.AboutTitle);
+            appBarAboutMenuItem.Click += (s, e) =>
                 {
                     NavigationService.Navigate(new Uri("/Pages/AboutPage.xaml", UriKind.Relative));
                 };
-            ApplicationBar.MenuItems.Add(appBarMenuItem);
+            ApplicationBar.MenuItems.Add(appBarAboutMenuItem);
         }
 
         /// <summary>
