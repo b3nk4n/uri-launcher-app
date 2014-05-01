@@ -120,7 +120,7 @@ namespace UriLauncher.App.ViewModels
                 return;
 
             bool wasPinned = IsPinned;
-            var oldUriString = string.Copy(Uri.OriginalString);
+            var oldUriString = (Uri == null) ? null : string.Copy(Uri.OriginalString);
 
             Title = title;
             Uri = new Uri(uriString, UriKind.Absolute);
@@ -128,7 +128,7 @@ namespace UriLauncher.App.ViewModels
             // ask for pinned tile update
             if (wasPinned)
             {
-                if (oldUriString != uriString)
+                if (oldUriString != null && oldUriString != uriString)
                 {
                     // remove the olde tile, because the URI has changed.
                     if (MessageBox.Show(AppResources.MessageBoxAskForTileUpdate, AppResources.MessageBoxInfo, MessageBoxButton.OKCancel) == MessageBoxResult.OK)
@@ -220,12 +220,14 @@ namespace UriLauncher.App.ViewModels
         }
 
         /// <summary>
-        /// Gets the current tile Uri.
+        /// Gets the current tile Uri or NULL, when no URI is set.
         /// </summary>
         private Uri CurrentTileUri
         {
             get
             {
+                if (Uri == null)
+                    return null;
                 return GetTileUri(Uri.OriginalString);
             }
         }
@@ -248,6 +250,8 @@ namespace UriLauncher.App.ViewModels
         {
             get
             {
+                if (CurrentTileUri == null)
+                    return false;
                 return LiveTileHelper.TileExists(CurrentTileUri);
             }
         }
