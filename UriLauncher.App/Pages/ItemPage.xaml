@@ -1,5 +1,5 @@
 ﻿<phone:PhoneApplicationPage
-    x:Class="UriLauncher.App.Pages.AboutPage"
+    x:Class="UriLauncher.App.Pages.ItemPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
@@ -7,50 +7,58 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-    xmlns:local="clr-namespace:UriLauncher.App.Controls"
+    xmlns:vm="clr-namespace:UriLauncher.App.ViewModels"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d">
 
     <toolkit:TransitionService.NavigationInTransition>
         <toolkit:NavigationInTransition>
             <toolkit:NavigationInTransition.Backward>
-                <toolkit:SlideTransition Mode="SlideUpFadeIn"/>
+                <toolkit:TurnstileFeatherTransition Mode="BackwardIn" />
             </toolkit:NavigationInTransition.Backward>
             <toolkit:NavigationInTransition.Forward>
-                <toolkit:SlideTransition Mode="SlideUpFadeIn"/>
+                <toolkit:TurnstileFeatherTransition Mode="ForwardIn" />
             </toolkit:NavigationInTransition.Forward>
         </toolkit:NavigationInTransition>
     </toolkit:TransitionService.NavigationInTransition>
     <toolkit:TransitionService.NavigationOutTransition>
         <toolkit:NavigationOutTransition>
             <toolkit:NavigationOutTransition.Backward>
-                <toolkit:SlideTransition Mode="SlideDownFadeOut"/>
+                <toolkit:TurnstileFeatherTransition Mode="BackwardOut" />
             </toolkit:NavigationOutTransition.Backward>
             <toolkit:NavigationOutTransition.Forward>
-                <toolkit:SlideTransition Mode="SlideDownFadeOut"/>
+                <toolkit:TurnstileFeatherTransition Mode="ForwardOut" />
             </toolkit:NavigationOutTransition.Forward>
         </toolkit:NavigationOutTransition>
     </toolkit:TransitionService.NavigationOutTransition>
-
-    <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot">
+    
+    <!--LayoutRoot ist das Stammraster, in dem alle anderen Seiteninhalte platziert werden-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!--TitlePanel contains the name of the application and page title-->
+        <!--TitlePanel enthält den Namen der Anwendung und den Seitentitel-->
         <Border Grid.Row="0" Background="{StaticResource PhoneAccentBrush}" Height="72">
             <StackPanel Orientation="Horizontal" Margin="{StaticResource PhoneHorizontalMargin}" VerticalAlignment="Center">
-                <TextBlock Text="{Binding Path=LocalizedResources.AboutTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextLargeStyle}" Margin="12,0" VerticalAlignment="Center"/>
+                <Image x:Name="ImageHeader" Source="/Assets/AppBar/edit.png" Height="72" />
+                <TextBlock x:Name="TextBlockHeader" Text="add / edit" Style="{StaticResource PhoneTextLargeStyle}" Margin="12,0" VerticalAlignment="Center"/>
             </StackPanel>
         </Border>
 
-        <!--ContentPanel - place additional content here-->
+        <!--ContentPanel - zusätzliche Inhalte hier platzieren-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <local:LocalizedAboutControl Background="Green" />
+            <StackPanel Margin="{StaticResource PhoneVerticalMargin}">
+                <TextBlock Text="Title" Style="{StaticResource PhoneTextSubtleStyle}" />
+                <TextBox x:Name="TextBoxTitle" Text="{Binding Title}" />
+                <TextBlock Text="Uri" Style="{StaticResource PhoneTextSubtleStyle}" />
+                <TextBox x:Name="TextBoxUri" Text="{Binding Uri}"
+                         InputScope="Url" TextWrapping="Wrap" Height="288"/>
+            </StackPanel>
         </Grid>
     </Grid>
 

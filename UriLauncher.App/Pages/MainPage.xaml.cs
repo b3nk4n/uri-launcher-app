@@ -9,6 +9,10 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using UriLauncher.App.Resources;
 using PhoneKit.Framework.Support;
+using System.Windows.Media;
+using UriLauncher.App.ViewModels;
+using Windows.System;
+using System.Threading.Tasks;
 
 namespace UriLauncher.App.Pages
 {
@@ -29,6 +33,8 @@ namespace UriLauncher.App.Pages
                 FeedbackManager.Instance.StartSecond();
             });
 
+            DataContext = new MainViewModel();
+
             BuildLocalizedApplicationBar();
         }
 
@@ -36,10 +42,44 @@ namespace UriLauncher.App.Pages
         /// When the page is navigated to.
         /// </summary>
         /// <param name="e">The event args.</param>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
+            if (await LaunchForward(e))
+                return;
+
             // fire startup events
             StartupActionManager.Instance.Fire();
+
+            // refresh data.
+            var vm = DataContext as MainViewModel;
+            if (vm != null)
+            {
+                vm.RefreshData();
+            }
+        }
+
+        private async Task<bool> LaunchForward(NavigationEventArgs e)
+        {
+            if (NavigationContext.QueryString != null && 
+                NavigationContext.QueryString.ContainsKey(LaunchItemViewModel.PARAM_LAUNCH_URI))
+            {
+                // check for BACK from previously launched URI
+                if (e.NavigationMode == NavigationMode.Back &&
+                    !e.IsNavigationInitiator)
+                {
+                    if (NavigationService.CanGoBack)
+                        NavigationService.GoBack();
+                    else
+                        App.Current.Terminate();
+                    return false;
+                }
+
+                var uri = NavigationContext.QueryString[LaunchItemViewModel.PARAM_LAUNCH_URI];
+                var result = await Launcher.LaunchUriAsync(new Uri(uri, UriKind.Absolute));
+                return result;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -47,21 +87,42 @@ namespace UriLauncher.App.Pages
         /// </summary>
         private void BuildLocalizedApplicationBar()
         {
-            // ApplicationBar der Seite einer neuen Instanz von ApplicationBar zuweisen
             ApplicationBar = new ApplicationBar();
+            ApplicationBar.Opacity = 0.9f;
+            ApplicationBar.BackgroundColor = (Color)App.Current.Resources["PhoneAccentColor"];
 
-            // Eine neue Schaltfläche erstellen und als Text die lokalisierte Zeichenfolge aus AppResources zuweisen.
-            //ApplicationBarIconButton appBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.add.rest.png", UriKind.Relative));
-            //appBarButton.Text = AppResources.AppBarButtonText;
-            //ApplicationBar.Buttons.Add(appBarButton);
+            // add
+            ApplicationBarIconButton appBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/add.png", UriKind.Relative));
+            appBarButton.Text = AppResources.AddTitle;
+            appBarButton.Click += (s, e) =>
+                {
+                    NavigationService.Navigate(new Uri("/Pages/ItemPage.xaml", UriKind.Relative));
+                };
+            ApplicationBar.Buttons.Add(appBarButton);
 
-            // Ein neues Menüelement mit der lokalisierten Zeichenfolge aus AppResources erstellen
+            // about
             ApplicationBarMenuItem appBarMenuItem = new ApplicationBarMenuItem(AppResources.AboutTitle);
             appBarMenuItem.Click += (s, e) =>
                 {
                     NavigationService.Navigate(new Uri("/Pages/AboutPage.xaml", UriKind.Relative));
                 };
             ApplicationBar.MenuItems.Add(appBarMenuItem);
+        }
+
+        /// <summary>
+        /// Is called, when the edit button of a LauchItem in the list was clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EditItemClicked(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            if (button != null)
+            {
+                var id = button.Tag;
+                var uriString = string.Format("/Pages/ItemPage.xaml?{0}={1}", ItemPage.PARAM_ID, id);
+                NavigationService.Navigate(new Uri(uriString, UriKind.Relative));
+            }
         }
     }
 }

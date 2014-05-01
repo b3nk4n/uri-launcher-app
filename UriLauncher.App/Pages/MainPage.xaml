@@ -8,12 +8,17 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:UriLauncher.App.Controls"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-    xmlns:vm="clr-namespace:UriLauncher.App.ViewModels"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait">
+    
+    <phone:PhoneApplicationPage.Resources>
+        <ControlTemplate x:Key="EmptyControlTemplate">
+            <ContentPresenter />
+        </ControlTemplate>
+    </phone:PhoneApplicationPage.Resources>
 
     <toolkit:TransitionService.NavigationInTransition>
         <toolkit:NavigationInTransition>
@@ -35,34 +40,60 @@
             </toolkit:NavigationOutTransition.Forward>
         </toolkit:NavigationOutTransition>
     </toolkit:TransitionService.NavigationOutTransition>
-    
-    <phone:PhoneApplicationPage.Resources>
-        <vm:MainViewModel x:Key="MainViewModel" />
-    </phone:PhoneApplicationPage.Resources>
 
     <!--LayoutRoot ist das Stammraster, in dem alle anderen Seiteninhalte platziert werden-->
-    <Grid x:Name="LayoutRoot" Background="Transparent" DataContext="{StaticResource MainViewModel}">
+    <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <!--TitlePanel enthält den Namen der Anwendung und den Seitentitel-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextNormalStyle}" Margin="12,0"/>
-            <TextBlock Text="Seitenname" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
-        </StackPanel>
+        <Border Grid.Row="0" Background="{StaticResource PhoneAccentBrush}" Height="72">
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource PhoneHorizontalMargin}" VerticalAlignment="Center">
+                <Image Source="/Assets/ApplicationIcon.png" Height="72" />
+                <TextBlock Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextLargeStyle}" Margin="12,0" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Border>
 
         <!--ContentPanel - zusätzliche Inhalte hier platzieren-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <ListBox ItemsSource="{Binding LaunchItems}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Border Margin="{StaticResource PhoneVerticalMargin}">
-                            <StackPanel Margin="{StaticResource PhoneMargin}">
-                                <TextBlock Text="{Binding Title}" Style="{StaticResource PhoneTextLargeStyle}" />
-                                <TextBlock Text="{Binding Uri}" Style="{StaticResource PhoneTextNormalStyle}" />
-                            </StackPanel>
+                        <Border Margin="0,12,0,0" Width="460" Background="{StaticResource PhoneAccentBrush}"
+                                toolkit:TiltEffect.IsTiltEnabled="True">
+                            <toolkit:ContextMenuService.ContextMenu>
+                                <toolkit:ContextMenu>
+                                    <toolkit:MenuItem Header="pin to start" Command="{Binding PinToStartCommand}" IsEnabled="{Binding CanPinToStart}" />
+                                </toolkit:ContextMenu>
+                            </toolkit:ContextMenuService.ContextMenu>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <StackPanel Grid.Row="0" Margin="{StaticResource PhoneMargin}">
+                                    <TextBlock Text="{Binding Title}" Style="{StaticResource PhoneTextLargeStyle}" />
+                                    <TextBlock Text="{Binding Uri}" Style="{StaticResource PhoneTextNormalStyle}" FontStyle="Italic" TextWrapping="Wrap" TextTrimming="None"/>
+                                </StackPanel>
+                                <Grid Grid.Row="1" Margin="24,12,24,12">
+                                    <Button Tag="{Binding Id}" Click="EditItemClicked" HorizontalAlignment="Left"
+                                    Template="{StaticResource EmptyControlTemplate}">
+                                        <StackPanel Orientation="Horizontal" toolkit:TiltEffect.IsTiltEnabled="True">
+                                            <Image Source="/Assets/AppBar/Edit_circle.png" Height="48" />
+                                            <TextBlock Text="edit" Style="{StaticResource PhoneTextLargeStyle}" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Command="{Binding LaunchCommand}" HorizontalAlignment="Right"
+                                    Template="{StaticResource EmptyControlTemplate}">
+                                        <StackPanel Orientation="Horizontal" toolkit:TiltEffect.IsTiltEnabled="True">
+                                            <Image Source="/Assets/AppBar/launch_circle.png" Height="48" />
+                                            <TextBlock Text="launch" Style="{StaticResource PhoneTextLargeStyle}" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </Button>
+                                </Grid>
+                            </Grid>
                         </Border>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

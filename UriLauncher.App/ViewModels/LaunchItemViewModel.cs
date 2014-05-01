@@ -9,6 +9,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using UriLauncher.App.Model;
 using Windows.System;
 
 namespace UriLauncher.App.ViewModels
@@ -16,32 +17,17 @@ namespace UriLauncher.App.ViewModels
     /// <summary>
     /// A launch item which allows launching of an URI.
     /// </summary>
-    public class LaunchItem : ViewModelBase
+    public class LaunchItemViewModel : ViewModelBase
     {
-        /// <summary>
-        /// The default tile title.
-        /// </summary>
-        public const string DEFAULT_TITLE = "";
-
         /// <summary>
         /// The launch URI navigation parameter.
         /// </summary>
         public const string PARAM_LAUNCH_URI = "launchUri";
 
         /// <summary>
-        /// Gets or sets the unique id.
+        /// The wrapped model.
         /// </summary>
-        public string Id { get; set; }
-
-        /// <summary>
-        /// The title.
-        /// </summary>
-        public string _title;
-
-        /// <summary>
-        /// The launch uri.
-        /// </summary>
-        public Uri _uri;
+        private LaunchItem _item;
 
         /// <summary>
         /// The launch command.
@@ -57,16 +43,14 @@ namespace UriLauncher.App.ViewModels
         /// Creates a LauchItem.
         /// </summary>
         /// <remarks>Required for serialisation.</remarks>
-        public LaunchItem()
-            : this(DEFAULT_TITLE, null)
+        public LaunchItemViewModel()
+            : this(new LaunchItem())
         {
         }
 
-        public LaunchItem(string title, Uri uri)
+        public LaunchItemViewModel(LaunchItem item)
         {
-            Id = Guid.NewGuid().ToString();
-            Title = title;
-            Uri = uri;
+            Item = item;
 
             InitializeCommands();
         }
@@ -103,17 +87,40 @@ namespace UriLauncher.App.ViewModels
             });
         }
 
+        public LaunchItem Item
+        {
+            get { return _item; }
+            set
+            {
+                if (_item == null || !_item.Equals(value))
+                {
+                    _item = value;
+                    NotifyPropertyChanged("Title");
+                    NotifyPropertyChanged("Uri");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the title.
+        /// </summary>
+        public string Id
+        {
+            get { return _item.Id; }
+        }
+            
+
         /// <summary>
         /// Gets or sets the title.
         /// </summary>
         public string Title
         {
-            get { return _title; }
+            get { return _item.Title; }
             set
             {
-                if (_title != value)
+                if (_item.Title != value)
                 {
-                    _title = value;
+                    _item.Title = value;
                     NotifyPropertyChanged("Title");
                 }
             }
@@ -124,12 +131,12 @@ namespace UriLauncher.App.ViewModels
         /// </summary>
         public Uri Uri
         {
-            get { return _uri; }
+            get { return _item.Uri; }
             set
             {
-                if (_uri != value)
+                if (_item.Uri != value)
                 {
-                    _uri = value;
+                    _item.Uri = value;
                     NotifyPropertyChanged("Uri");
                 }
             }
@@ -164,7 +171,7 @@ namespace UriLauncher.App.ViewModels
         {
             get
             {
-                return LiveTileHelper.TileExists(TileUri);
+                return !LiveTileHelper.TileExists(TileUri);
             }
         }
 

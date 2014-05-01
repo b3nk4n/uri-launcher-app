@@ -228,4 +228,16 @@ Das würde uns sehr motivieren um die App noch besser zu machen!</value>
     <value>hilfe und feedback</value>
     <comment>About Page</comment>
   </data>
+  <data name="AddTitle" xml:space="preserve">
+    <value>hinzufügen</value>
+    <comment>AppBar</comment>
+  </data>
+  <data name="AppBarSave" xml:space="preserve">
+    <value>speichern</value>
+    <comment>AppBar</comment>
+  </data>
+  <data name="EditTitle" xml:space="preserve">
+    <value>bearbeiten</value>
+    <comment>ItemPage</comment>
+  </data>
 </root>

@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UriLauncher.App.Model;
 
 namespace UriLauncher.App.ViewModels
 {
@@ -24,42 +25,46 @@ namespace UriLauncher.App.ViewModels
         /// <summary>
         /// The list of lauch items.
         /// </summary>
-        public ObservableCollection<LaunchItem> LaunchItems { get; set; }
+        public ObservableCollection<LaunchItemViewModel> LaunchItems { get; set; }
 
         /// <summary>
         /// Creates a MainViewModel instance.
         /// </summary>
         public MainViewModel()
         {
+            LoadDesignOrRuntimeData();
+        }
+
+        /// <summary>
+        /// Loads the design or runtime data.
+        /// </summary>
+        private void LoadDesignOrRuntimeData()
+        {
+            LaunchItems = new ObservableCollection<LaunchItemViewModel>();
+
             if (DesignerProperties.IsInDesignTool)
             {
-                LaunchItems = new ObservableCollection<LaunchItem>();
-                LaunchItems.Add(new LaunchItem("First Item", new Uri("test:go?param=12345", UriKind.Absolute)));
-                LaunchItems.Add(new LaunchItem("Second Item", new Uri("app:do?param=12345", UriKind.Absolute)));
-                LaunchItems.Add(new LaunchItem("Third Item", new Uri("whatever:check", UriKind.Absolute)));
+                LaunchItems.Add(new LaunchItemViewModel(new LaunchItem("First Item", new Uri("test:go?param=12345", UriKind.Absolute))));
+                LaunchItems.Add(new LaunchItemViewModel(new LaunchItem("Second Item", new Uri("app:do?param=12345", UriKind.Absolute))));
+                LaunchItems.Add(new LaunchItemViewModel(new LaunchItem("Third Item", new Uri("whatever:check", UriKind.Absolute))));
             }
-            else
+        }
+
+        /// <summary>
+        /// Refreshes the data.
+        /// </summary>
+        public void RefreshData()
+        {
+            LaunchItems.Clear();
+            var items = App.DataRepository.GetAll();
+
+            if (items != null)
             {
-                Load();
+                foreach (var item in items)
+                {
+                    LaunchItems.Add(new LaunchItemViewModel(item));
+                }
             }
-        }
-
-        /// <summary>
-        /// Loads the data.
-        /// </summary>
-        public void Load()
-        {
-            var loadedItems = StorageHelper.LoadSerializedFile<Collection<LaunchItem>>(COLLECTION_STORAGE_FILE);
-            LaunchItems = new ObservableCollection<LaunchItem>(loadedItems);
-        }
-
-        /// <summary>
-        /// Saves the data.
-        /// </summary>
-        /// <returns>Returns TRUE when the save process was successful, else FALSE in case of error.</returns>
-        public bool Save()
-        {
-            return StorageHelper.SaveAsSerializedFile<Collection<LaunchItem>>(COLLECTION_STORAGE_FILE, LaunchItems);
         }
     }
 }
