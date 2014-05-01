@@ -65,5 +65,23 @@ namespace UriLauncher.App.Model
         {
             return Id.GetHashCode() ^ Title.GetHashCode() ^ Uri.ToString().GetHashCode();
         }
+
+        /// <summary>
+        /// Verifies a given URI to be valid.
+        /// </summary>
+        /// <param name="uriString"></param>
+        /// <returns></returns>
+        public static bool IsUriValid(string uriString)
+        {
+            try
+            {
+                new Uri(uriString, UriKind.Absolute);
+                return true;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+        }
     }
 }

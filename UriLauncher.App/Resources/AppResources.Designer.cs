@@ -133,6 +133,24 @@ namespace UriLauncher.App.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die delete ähnelt.
+        /// </summary>
+        public static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die edit ähnelt.
+        /// </summary>
+        public static string EditItem {
+            get {
+                return ResourceManager.GetString("EditItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die edit ähnelt.
         /// </summary>
         public static string EditTitle {
@@ -216,11 +234,65 @@ namespace UriLauncher.App.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die launch ähnelt.
+        /// </summary>
+        public static string LaunchItem {
+            get {
+                return ResourceManager.GetString("LaunchItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Information ähnelt.
+        /// </summary>
+        public static string MessageBoxInfo {
+            get {
+                return ResourceManager.GetString("MessageBoxInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The given URI is not valid. ähnelt.
+        /// </summary>
+        public static string MessageBoxInvalidUri {
+            get {
+                return ResourceManager.GetString("MessageBoxInvalidUri", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Couldn&apos;t launch the URI. ähnelt.
+        /// </summary>
+        public static string MessageBoxLaunchFailed {
+            get {
+                return ResourceManager.GetString("MessageBoxLaunchFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Warning ähnelt.
+        /// </summary>
+        public static string MessageBoxWarning {
+            get {
+                return ResourceManager.GetString("MessageBoxWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die more apps ähnelt.
         /// </summary>
         public static string MoreApps {
             get {
                 return ResourceManager.GetString("MoreApps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die pin to start ähnelt.
+        /// </summary>
+        public static string PinToStart {
+            get {
+                return ResourceManager.GetString("PinToStart", resourceCulture);
             }
         }
         
@@ -315,6 +387,24 @@ namespace UriLauncher.App.Resources {
         public static string SupportAndFeedback {
             get {
                 return ResourceManager.GetString("SupportAndFeedback", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Title ähnelt.
+        /// </summary>
+        public static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die URI ähnelt.
+        /// </summary>
+        public static string Uri {
+            get {
+                return ResourceManager.GetString("Uri", resourceCulture);
             }
         }
     }

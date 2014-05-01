@@ -92,8 +92,13 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AssociationUriMapper.cs" />
+    <Compile Include="Controls\LaunchNormalTileControl.xaml.cs">
+      <DependentUpon>LaunchNormalTileControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LocalizedAboutControl.cs" />
     <Compile Include="Controls\LocalizedFeedbackDialogControl.cs" />
+    <Compile Include="LaunchManager.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="Model\IRepository.cs" />
     <Compile Include="Model\LaunchItem.cs" />
@@ -121,6 +126,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="Controls\LaunchNormalTileControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\AboutPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -149,6 +158,7 @@
     <Content Include="Assets\AppBar\edit.png" />
     <Content Include="Assets\AppBar\edit_circle.png" />
     <Content Include="Assets\AppBar\launch_circle.png" />
+    <Content Include="Assets\AppBar\questionmark.png" />
     <Content Include="Assets\AppBar\save.png" />
     <Content Include="Assets\ApplicationIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

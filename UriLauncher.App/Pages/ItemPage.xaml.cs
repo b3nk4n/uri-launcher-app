@@ -11,6 +11,9 @@ using UriLauncher.App.ViewModels;
 using System.Windows.Media;
 using UriLauncher.App.Resources;
 using System.Windows.Media.Imaging;
+using UriLauncher.App.Model;
+using PhoneKit.Framework.Storage;
+using PhoneKit.Framework.OS;
 
 namespace UriLauncher.App.Pages
 {
@@ -20,6 +23,11 @@ namespace UriLauncher.App.Pages
         /// The ID parameter.
         /// </summary>
         public const string PARAM_ID = "id";
+
+        /// <summary>
+        /// The delete appbar menu item.
+        /// </summary>
+        private IApplicationBarMenuItem _deleteApplicationBarMenuItem;
 
         public ItemPage()
         {
@@ -34,7 +42,7 @@ namespace UriLauncher.App.Pages
         private void BuildLocalizedApplicationBar()
         {
             ApplicationBar = new ApplicationBar();
-            ApplicationBar.Opacity = 0.9f;
+            ApplicationBar.Opacity = 0.99f;
             ApplicationBar.BackgroundColor = (Color)App.Current.Resources["PhoneAccentColor"];
 
             // add
@@ -45,6 +53,22 @@ namespace UriLauncher.App.Pages
                 Save();
             };
             ApplicationBar.Buttons.Add(appBarButton);
+
+            // delete
+            _deleteApplicationBarMenuItem = new ApplicationBarMenuItem(AppResources.Delete);
+            _deleteApplicationBarMenuItem.IsEnabled = false;
+            _deleteApplicationBarMenuItem.Click += (s, e) =>
+            {
+                var vm = DataContext as LaunchItemViewModel;
+                if (vm != null)
+                {
+                    App.DataRepository.Delete(vm.Item);
+                }
+
+                if (NavigationService.CanGoBack)
+                    NavigationService.GoBack();
+            };
+            ApplicationBar.MenuItems.Add(_deleteApplicationBarMenuItem);
         }
 
         /// <summary>
@@ -55,9 +79,20 @@ namespace UriLauncher.App.Pages
             var vm = DataContext as LaunchItemViewModel;
             if (vm != null)
             {
-                vm.Title = TextBoxTitle.Text;
-                vm.Uri = new Uri(TextBoxUri.Text, UriKind.Absolute);
+                var title = TextBoxTitle.Text;
+                var uriString = TextBoxUri.Text;
+
+                if (!LaunchItem.IsUriValid(uriString))
+                {
+                    MessageBox.Show(AppResources.MessageBoxInvalidUri, AppResources.MessageBoxWarning, MessageBoxButton.OK);
+                    return;
+                }
+
+                vm.Title = title;
+                vm.Uri = new Uri(uriString, UriKind.Absolute);
                 App.DataRepository.InsertOrUpdate(vm.Item);
+
+                VibrationHelper.Vibrate(0.1f);
             }
         }
 
@@ -67,28 +102,73 @@ namespace UriLauncher.App.Pages
             if (NavigationContext.QueryString != null &&
                 NavigationContext.QueryString.ContainsKey(PARAM_ID))
             {
-                SetHeader("/Assets/AppBar/edit.png", AppResources.EditTitle);
+                SetMode(true);
                 var id = NavigationContext.QueryString[PARAM_ID];
                 item = new LaunchItemViewModel(App.DataRepository.GetById(id));
             }
             else
             {
-                SetHeader("/Assets/AppBar/add.png", AppResources.AddTitle);
+                SetMode(false);
                 item = new LaunchItemViewModel();
             }
+
+            LoadState();
 
             DataContext = item;
         }
 
-        /// <summary>
-        /// Sets and updates the header.
-        /// </summary>
-        /// <param name="imagePath">The image path.</param>
-        /// <param name="text">The header text.</param>
-        private void SetHeader(string imagePath, string text)
+        #region State/Tombstoning
+
+        private const string TITLE_STATE_KEY = "titleState";
+        private const string URI_STATE_KEY = "uriState";
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            ImageHeader.Source = new BitmapImage(new Uri(imagePath, UriKind.Relative));
-            TextBlockHeader.Text = text;
+            SaveState();
+        }
+
+        /// <summary>
+        /// Loads the app state.
+        /// </summary>
+        private void LoadState()
+        {
+            var title = PhoneStateHelper.LoadValue<string>(TITLE_STATE_KEY, null);
+            if (title != null)
+                TextBoxTitle.Text = title;
+
+            var uri = PhoneStateHelper.LoadValue<string>(URI_STATE_KEY, null);
+            if (uri != null)
+                TextBoxUri.Text = uri;
+        }
+
+        /// <summary>
+        /// Saves the app state.
+        /// </summary>
+        private void SaveState()
+        {
+            PhoneStateHelper.SaveValue(TITLE_STATE_KEY, TextBoxTitle.Text);
+            PhoneStateHelper.SaveValue(URI_STATE_KEY, TextBoxUri.Text);
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Sets the page mode (edit or add).
+        /// </summary>
+        /// <param name="isEdit">TRUE for edit mode, FALSE for add mode.</param>
+        private void SetMode(bool isEditMode)
+        {
+            if (isEditMode)
+            {
+                ImageHeader.Source = new BitmapImage(new Uri("/Assets/AppBar/edit.png", UriKind.Relative));
+                TextBlockHeader.Text = AppResources.EditTitle;
+                _deleteApplicationBarMenuItem.IsEnabled = true;
+            }
+            else // add mode
+            {
+                ImageHeader.Source = new BitmapImage(new Uri("/Assets/AppBar/add.png", UriKind.Relative));
+                TextBlockHeader.Text = AppResources.AddTitle;
+            }
         }
     }
 }

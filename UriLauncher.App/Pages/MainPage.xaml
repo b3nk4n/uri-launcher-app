@@ -23,20 +23,20 @@
     <toolkit:TransitionService.NavigationInTransition>
         <toolkit:NavigationInTransition>
             <toolkit:NavigationInTransition.Backward>
-                <toolkit:TurnstileFeatherTransition Mode="BackwardIn" />
+                <toolkit:TurnstileTransition Mode="BackwardIn" />
             </toolkit:NavigationInTransition.Backward>
             <toolkit:NavigationInTransition.Forward>
-                <toolkit:TurnstileFeatherTransition Mode="ForwardIn" />
+                <toolkit:TurnstileTransition Mode="ForwardIn" />
             </toolkit:NavigationInTransition.Forward>
         </toolkit:NavigationInTransition>
     </toolkit:TransitionService.NavigationInTransition>
     <toolkit:TransitionService.NavigationOutTransition>
         <toolkit:NavigationOutTransition>
             <toolkit:NavigationOutTransition.Backward>
-                <toolkit:TurnstileFeatherTransition Mode="BackwardOut" />
+                <toolkit:TurnstileTransition Mode="BackwardOut" />
             </toolkit:NavigationOutTransition.Backward>
             <toolkit:NavigationOutTransition.Forward>
-                <toolkit:TurnstileFeatherTransition Mode="ForwardOut" />
+                <toolkit:TurnstileTransition Mode="ForwardOut" />
             </toolkit:NavigationOutTransition.Forward>
         </toolkit:NavigationOutTransition>
     </toolkit:TransitionService.NavigationOutTransition>
@@ -57,7 +57,7 @@
         </Border>
 
         <!--ContentPanel - zusätzliche Inhalte hier platzieren-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,72">
             <ListBox ItemsSource="{Binding LaunchItems}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -65,7 +65,7 @@
                                 toolkit:TiltEffect.IsTiltEnabled="True">
                             <toolkit:ContextMenuService.ContextMenu>
                                 <toolkit:ContextMenu>
-                                    <toolkit:MenuItem Header="pin to start" Command="{Binding PinToStartCommand}" IsEnabled="{Binding CanPinToStart}" />
+                                    <toolkit:MenuItem Header="{Binding Path=LocalizedResources.PinToStart, Source={StaticResource LocalizedStrings}}" Command="{Binding PinToStartCommand}" IsEnabled="{Binding CanPinToStart}" />
                                 </toolkit:ContextMenu>
                             </toolkit:ContextMenuService.ContextMenu>
                             <Grid>
@@ -82,14 +82,14 @@
                                     Template="{StaticResource EmptyControlTemplate}">
                                         <StackPanel Orientation="Horizontal" toolkit:TiltEffect.IsTiltEnabled="True">
                                             <Image Source="/Assets/AppBar/Edit_circle.png" Height="48" />
-                                            <TextBlock Text="edit" Style="{StaticResource PhoneTextLargeStyle}" VerticalAlignment="Center" />
+                                            <TextBlock Text="{Binding Path=LocalizedResources.EditItem, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextLargeStyle}" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </Button>
                                     <Button Command="{Binding LaunchCommand}" HorizontalAlignment="Right"
                                     Template="{StaticResource EmptyControlTemplate}">
                                         <StackPanel Orientation="Horizontal" toolkit:TiltEffect.IsTiltEnabled="True">
                                             <Image Source="/Assets/AppBar/launch_circle.png" Height="48" />
-                                            <TextBlock Text="launch" Style="{StaticResource PhoneTextLargeStyle}" VerticalAlignment="Center" />
+                                            <TextBlock Text="{Binding Path=LocalizedResources.LaunchItem, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextLargeStyle}" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </Button>
                                 </Grid>

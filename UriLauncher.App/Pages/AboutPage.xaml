@@ -44,13 +44,14 @@
         <!--TitlePanel contains the name of the application and page title-->
         <Border Grid.Row="0" Background="{StaticResource PhoneAccentBrush}" Height="72">
             <StackPanel Orientation="Horizontal" Margin="{StaticResource PhoneHorizontalMargin}" VerticalAlignment="Center">
+                <Image Source="/Assets/AppBar/questionmark.png" Height="72" />
                 <TextBlock Text="{Binding Path=LocalizedResources.AboutTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextLargeStyle}" Margin="12,0" VerticalAlignment="Center"/>
             </StackPanel>
         </Border>
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <local:LocalizedAboutControl Background="Green" />
+            <local:LocalizedAboutControl Background="Green"/>
         </Grid>
     </Grid>
 

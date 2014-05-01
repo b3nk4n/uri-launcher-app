@@ -1,5 +1,7 @@
 ﻿using Microsoft.Phone.Shell;
+using PhoneKit.Framework.Core.Graphics;
 using PhoneKit.Framework.Core.MVVM;
+using PhoneKit.Framework.Core.Storage;
 using PhoneKit.Framework.Core.Tile;
 using PhoneKit.Framework.Tile;
 using System;
@@ -9,7 +11,9 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using UriLauncher.App.Controls;
 using UriLauncher.App.Model;
+using UriLauncher.App.Resources;
 using Windows.System;
 
 namespace UriLauncher.App.ViewModels
@@ -64,7 +68,7 @@ namespace UriLauncher.App.ViewModels
             {
                 if (IsValid)
                 {
-                    await Launcher.LaunchUriAsync(Uri);
+                    var res = await LaunchManager.LaunchUriAsync(Uri);
                 }
             }, () =>
             {
@@ -75,10 +79,18 @@ namespace UriLauncher.App.ViewModels
             {
                 if (CanPinToStart)
                 {
-                    // TODO images with better tile
+                    var gfx = GraphicsHelper.Create(new LaunchNormalTileControl(_item.Title, _item.Uri.OriginalString));
+                    var uri = StorageHelper.SavePng(string.Format("{0}launch_{1}_{2}.png",
+                        LiveTileHelper.SHARED_SHELL_CONTENT_PATH,
+                        _item.Id,
+                        DateTime.Now.Ticks.ToString()), gfx);
+
                     LiveTilePinningHelper.PinOrUpdateTile(TileUri, new StandardTileData
                     {
-                        Title = Title,
+                        Title = AppResources.ApplicationTitle,
+                        BackgroundImage = uri,
+                        BackBackgroundImage = new Uri("/Assets/Tiles/FlipCycleTileMedium.png", UriKind.Relative),
+                        BackTitle = _item.Title
                     });
                 }
             }, () =>
@@ -149,7 +161,7 @@ namespace UriLauncher.App.ViewModels
         {
             get
             {
-                return true; // TODO implement
+                return LaunchItem.IsUriValid(_item.Uri.OriginalString);
             }
         }
 

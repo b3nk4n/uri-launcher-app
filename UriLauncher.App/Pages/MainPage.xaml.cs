@@ -75,7 +75,12 @@ namespace UriLauncher.App.Pages
                 }
 
                 var uri = NavigationContext.QueryString[LaunchItemViewModel.PARAM_LAUNCH_URI];
-                var result = await Launcher.LaunchUriAsync(new Uri(uri, UriKind.Absolute));
+
+                // verify it doesn't try to launch itself, which caused a crash.
+                if (uri.StartsWith("launcher:"))
+                    return false;
+
+                var result = await LaunchManager.LaunchUriAsync(new Uri(uri, UriKind.Absolute));
                 return result;
             }
 
@@ -88,7 +93,7 @@ namespace UriLauncher.App.Pages
         private void BuildLocalizedApplicationBar()
         {
             ApplicationBar = new ApplicationBar();
-            ApplicationBar.Opacity = 0.9f;
+            ApplicationBar.Opacity = 0.99f;
             ApplicationBar.BackgroundColor = (Color)App.Current.Resources["PhoneAccentColor"];
 
             // add

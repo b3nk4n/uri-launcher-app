@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="UriLauncher.App.Controls.LaunchNormalTileControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="336" d:DesignWidth="336"
+             Width="336" Height="336">
+    
+    <Grid x:Name="LayoutRoot" Margin="24,24,24,64">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" x:Name="TextBlockTitle" Text="Title"  FontSize="36" TextWrapping="Wrap" />
+        <TextBlock Grid.Row="1" x:Name="TextBlockContent" FontSize="24" Text="app:example?param=1" TextWrapping="Wrap" FontStyle="Italic" Margin="0,12,0,0" />
+    </Grid>
+</UserControl>

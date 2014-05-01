@@ -118,6 +118,9 @@ namespace UriLauncher.App
             RootFrame = new TransitionFrame();
             RootFrame.Navigated += CompleteInitializePhoneApplication;
 
+            // Assign the URI-mapper class to the application frame.
+            RootFrame.UriMapper = new AssociationUriMapper();
+
             // Navigationsfehler behandeln
             RootFrame.NavigationFailed += RootFrame_NavigationFailed;
 
