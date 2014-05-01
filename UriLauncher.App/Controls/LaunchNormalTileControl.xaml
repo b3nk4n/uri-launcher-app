@@ -15,7 +15,9 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" x:Name="TextBlockTitle" Text="Title"  FontSize="36" TextWrapping="Wrap" />
-        <TextBlock Grid.Row="1" x:Name="TextBlockContent" FontSize="24" Text="app:example?param=1" TextWrapping="Wrap" FontStyle="Italic" Margin="0,12,0,0" />
+        <TextBlock Grid.Row="0" x:Name="TextBlockTitle" Text="Title"  FontSize="36" TextWrapping="Wrap"
+                   Foreground="White"/>
+        <TextBlock Grid.Row="1" x:Name="TextBlockContent" FontSize="24" Text="app:example?param=1" TextWrapping="Wrap" FontStyle="Italic" Margin="0,12,0,0"
+                   Foreground="White"/>
     </Grid>
 </UserControl>

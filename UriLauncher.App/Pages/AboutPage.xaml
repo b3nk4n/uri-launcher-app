@@ -45,7 +45,8 @@
         <Border Grid.Row="0" Background="{StaticResource PhoneAccentBrush}" Height="72">
             <StackPanel Orientation="Horizontal" Margin="{StaticResource PhoneHorizontalMargin}" VerticalAlignment="Center">
                 <Image Source="/Assets/AppBar/questionmark.png" Height="72" />
-                <TextBlock Text="{Binding Path=LocalizedResources.AboutTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextLargeStyle}" Margin="12,0" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding Path=LocalizedResources.AboutTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextLargeStyle}" Margin="12,0" VerticalAlignment="Center"
+                           Foreground="White"/>
             </StackPanel>
         </Border>
 

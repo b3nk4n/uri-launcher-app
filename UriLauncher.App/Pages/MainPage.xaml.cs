@@ -95,6 +95,7 @@ namespace UriLauncher.App.Pages
             ApplicationBar = new ApplicationBar();
             ApplicationBar.Opacity = 0.99f;
             ApplicationBar.BackgroundColor = (Color)App.Current.Resources["PhoneAccentColor"];
+            ApplicationBar.ForegroundColor = Colors.White;
 
             // add
             ApplicationBarIconButton appBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/add.png", UriKind.Relative));

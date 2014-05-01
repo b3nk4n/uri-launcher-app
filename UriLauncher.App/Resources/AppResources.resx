@@ -280,4 +280,8 @@ Showing us some love on the store helps us to continue to work on the app and ma
     <value>URI</value>
     <comment>ItemPage</comment>
   </data>
+  <data name="MessageBoxAskForTileUpdate" xml:space="preserve">
+    <value>This launch configuration is pinned to the start screen. Do you want to remove the old one and repin the tile?</value>
+    <comment>ItemPage</comment>
+  </data>
 </root>

@@ -29,6 +29,9 @@ namespace UriLauncher.App.Pages
         /// </summary>
         private IApplicationBarMenuItem _deleteApplicationBarMenuItem;
 
+        /// <summary>
+        /// Creates an ItemPage instance.
+        /// </summary>
         public ItemPage()
         {
             InitializeComponent();
@@ -44,6 +47,7 @@ namespace UriLauncher.App.Pages
             ApplicationBar = new ApplicationBar();
             ApplicationBar.Opacity = 0.99f;
             ApplicationBar.BackgroundColor = (Color)App.Current.Resources["PhoneAccentColor"];
+            ApplicationBar.ForegroundColor = Colors.White;
 
             // add
             ApplicationBarIconButton appBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/save.png", UriKind.Relative));
@@ -88,14 +92,21 @@ namespace UriLauncher.App.Pages
                     return;
                 }
 
-                vm.Title = title;
-                vm.Uri = new Uri(uriString, UriKind.Absolute);
+                vm.Update(title, uriString);
+
                 App.DataRepository.InsertOrUpdate(vm.Item);
 
-                VibrationHelper.Vibrate(0.1f);
+                VibrationHelper.Vibrate(0.15f);
+
+                // after the item is saved, we are in edit mode.
+                SetMode(true);
             }
         }
 
+        /// <summary>
+        /// Loads the data context an app state when the page is navigated to.
+        /// </summary>
+        /// <param name="e">The navigation event args.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             LaunchItemViewModel item; 
@@ -122,9 +133,20 @@ namespace UriLauncher.App.Pages
         private const string TITLE_STATE_KEY = "titleState";
         private const string URI_STATE_KEY = "uriState";
 
+        /// <summary>
+        /// Saves the app state when the page is navigated from.
+        /// </summary>
+        /// <param name="e">The navigation event args.</param>
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            SaveState();
+            if (!e.IsNavigationInitiator)
+            {
+                SaveState();
+            }
+            else
+            {
+                ClearState();
+            }
         }
 
         /// <summary>
@@ -148,6 +170,15 @@ namespace UriLauncher.App.Pages
         {
             PhoneStateHelper.SaveValue(TITLE_STATE_KEY, TextBoxTitle.Text);
             PhoneStateHelper.SaveValue(URI_STATE_KEY, TextBoxUri.Text);
+        }
+
+        /// <summary>
+        /// Clears the app state.
+        /// </summary>
+        public void ClearState()
+        {
+            PhoneStateHelper.SaveValue(TITLE_STATE_KEY, null);
+            PhoneStateHelper.SaveValue(URI_STATE_KEY, null);
         }
 
         #endregion

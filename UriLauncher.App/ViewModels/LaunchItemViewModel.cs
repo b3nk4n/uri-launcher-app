@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using UriLauncher.App.Controls;
 using UriLauncher.App.Model;
@@ -79,24 +80,65 @@ namespace UriLauncher.App.ViewModels
             {
                 if (CanPinToStart)
                 {
-                    var gfx = GraphicsHelper.Create(new LaunchNormalTileControl(_item.Title, _item.Uri.OriginalString));
-                    var uri = StorageHelper.SavePng(string.Format("{0}launch_{1}_{2}.png",
-                        LiveTileHelper.SHARED_SHELL_CONTENT_PATH,
-                        _item.Id,
-                        DateTime.Now.Ticks.ToString()), gfx);
-
-                    LiveTilePinningHelper.PinOrUpdateTile(TileUri, new StandardTileData
-                    {
-                        Title = AppResources.ApplicationTitle,
-                        BackgroundImage = uri,
-                        BackBackgroundImage = new Uri("/Assets/Tiles/FlipCycleTileMedium.png", UriKind.Relative),
-                        BackTitle = _item.Title
-                    });
+                    PinToStartOrUpdate();
                 }
             }, () =>
             {
                 return CanPinToStart;
             });
+        }
+
+        /// <summary>
+        /// Pins a tile to the start screen.
+        /// </summary>
+        private void PinToStartOrUpdate()
+        {
+            var gfx = GraphicsHelper.Create(new LaunchNormalTileControl(_item.Title, _item.Uri.OriginalString));
+            var uri = StorageHelper.SavePng(string.Format("{0}launch_{1}_{2}.png",
+                LiveTileHelper.SHARED_SHELL_CONTENT_PATH,
+                _item.Id,
+                DateTime.Now.Ticks.ToString()), gfx);
+
+            LiveTilePinningHelper.PinOrUpdateTile(CurrentTileUri, new StandardTileData
+            {
+                Title = AppResources.ApplicationTitle,
+                BackgroundImage = uri,
+                BackBackgroundImage = new Uri("/Assets/Tiles/FlipCycleTileMedium.png", UriKind.Relative),
+                BackTitle = _item.Title
+            });
+        }
+
+        /// <summary>
+        /// Updates the tile and asks for live tile update.
+        /// </summary>
+        /// <param name="title">The new title</param>
+        /// <param name="uriString">The new uri string.</param>
+        public void Update(string title, string uriString)
+        {
+            // verify the data has changed
+            if (Title == title && uriString == Uri.OriginalString)
+                return;
+
+            bool wasPinned = IsPinned;
+            var oldUriString = string.Copy(Uri.OriginalString);
+
+            Title = title;
+            Uri = new Uri(uriString, UriKind.Absolute);
+
+            // ask for pinned tile update
+            if (wasPinned)
+            {
+                if (oldUriString != uriString)
+                {
+                    // remove the olde tile, because the URI has changed.
+                    if (MessageBox.Show(AppResources.MessageBoxAskForTileUpdate, AppResources.MessageBoxInfo, MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                    {
+                        LiveTileHelper.RemoveTile(GetTileUri(oldUriString));
+                    }
+                }
+                // repin or update the tile
+                PinToStartOrUpdate();
+            }
         }
 
         public LaunchItem Item
@@ -165,14 +207,26 @@ namespace UriLauncher.App.ViewModels
             }
         }
 
-        private Uri TileUri
+        /// <summary>
+        /// Gets the tile Uri.
+        /// </summary>
+        /// <returns></returns>
+        private Uri GetTileUri(string uriString)
+        {
+            var fullUriString = string.Format("/Pages/MainPage.xaml?{0}={1}",
+                    PARAM_LAUNCH_URI,
+                    HttpUtility.UrlEncode(uriString));
+            return new Uri(fullUriString, UriKind.Relative);
+        }
+
+        /// <summary>
+        /// Gets the current tile Uri.
+        /// </summary>
+        private Uri CurrentTileUri
         {
             get
             {
-                var uriString = string.Format("/Pages/MainPage.xaml?{0}={1}", 
-                    PARAM_LAUNCH_URI,
-                    HttpUtility.UrlEncode(Uri.OriginalString));
-                return new Uri(uriString, UriKind.Relative);
+                return GetTileUri(Uri.OriginalString);
             }
         }
 
@@ -183,7 +237,18 @@ namespace UriLauncher.App.ViewModels
         {
             get
             {
-                return !LiveTileHelper.TileExists(TileUri);
+                return !IsPinned;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether the launch item is pinned or not.
+        /// </summary>
+        public bool IsPinned
+        {
+            get
+            {
+                return LiveTileHelper.TileExists(CurrentTileUri);
             }
         }
 

@@ -52,7 +52,8 @@
         <Border Grid.Row="0" Background="{StaticResource PhoneAccentBrush}" Height="72">
             <StackPanel Orientation="Horizontal" Margin="{StaticResource PhoneHorizontalMargin}" VerticalAlignment="Center">
                 <Image Source="/Assets/ApplicationIcon.png" Height="72" />
-                <TextBlock Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextLargeStyle}" Margin="12,0" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextLargeStyle}" Margin="12,0" VerticalAlignment="Center"
+                           Foreground="White"/>
             </StackPanel>
         </Border>
 
@@ -74,22 +75,26 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <StackPanel Grid.Row="0" Margin="{StaticResource PhoneMargin}">
-                                    <TextBlock Text="{Binding Title}" Style="{StaticResource PhoneTextLargeStyle}" />
-                                    <TextBlock Text="{Binding Uri}" Style="{StaticResource PhoneTextNormalStyle}" FontStyle="Italic" TextWrapping="Wrap" TextTrimming="None"/>
+                                    <TextBlock Text="{Binding Title}" Style="{StaticResource PhoneTextLargeStyle}" 
+                                               Foreground="White"/>
+                                    <TextBlock Text="{Binding Uri}" Style="{StaticResource PhoneTextNormalStyle}" FontStyle="Italic" TextWrapping="Wrap" TextTrimming="None"
+                                               Foreground="White"/>
                                 </StackPanel>
                                 <Grid Grid.Row="1" Margin="24,12,24,12">
                                     <Button Tag="{Binding Id}" Click="EditItemClicked" HorizontalAlignment="Left"
                                     Template="{StaticResource EmptyControlTemplate}">
                                         <StackPanel Orientation="Horizontal" toolkit:TiltEffect.IsTiltEnabled="True">
                                             <Image Source="/Assets/AppBar/Edit_circle.png" Height="48" />
-                                            <TextBlock Text="{Binding Path=LocalizedResources.EditItem, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextLargeStyle}" VerticalAlignment="Center" />
+                                            <TextBlock Text="{Binding Path=LocalizedResources.EditItem, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextLargeStyle}" VerticalAlignment="Center" 
+                                                       Foreground="White"/>
                                         </StackPanel>
                                     </Button>
                                     <Button Command="{Binding LaunchCommand}" HorizontalAlignment="Right"
                                     Template="{StaticResource EmptyControlTemplate}">
                                         <StackPanel Orientation="Horizontal" toolkit:TiltEffect.IsTiltEnabled="True">
                                             <Image Source="/Assets/AppBar/launch_circle.png" Height="48" />
-                                            <TextBlock Text="{Binding Path=LocalizedResources.LaunchItem, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextLargeStyle}" VerticalAlignment="Center" />
+                                            <TextBlock Text="{Binding Path=LocalizedResources.LaunchItem, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextLargeStyle}" VerticalAlignment="Center"
+                                                       Foreground="White"/>
                                         </StackPanel>
                                     </Button>
                                 </Grid>

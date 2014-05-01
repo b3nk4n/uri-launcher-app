@@ -243,6 +243,15 @@ namespace UriLauncher.App.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die This launch configuration is pinned to the start screen. Do you want to remove the old one and repin the tile? ähnelt.
+        /// </summary>
+        public static string MessageBoxAskForTileUpdate {
+            get {
+                return ResourceManager.GetString("MessageBoxAskForTileUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Information ähnelt.
         /// </summary>
         public static string MessageBoxInfo {

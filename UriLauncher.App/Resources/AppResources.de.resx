@@ -280,4 +280,8 @@ Das würde uns sehr motivieren um die App noch besser zu machen!</value>
     <value>URI</value>
     <comment>ItemPage</comment>
   </data>
+  <data name="MessageBoxAskForTileUpdate" xml:space="preserve">
+    <value>Diese Start-Konfiguration ist auf die Startseite gepinnt. Soll die alte Live-Kachel entfernt und die neue Konfiguration auf die Startseite gepinnt werden?</value>
+    <comment>ItemPage</comment>
+  </data>
 </root>
