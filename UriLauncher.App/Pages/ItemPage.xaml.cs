@@ -27,7 +27,7 @@ namespace UriLauncher.App.Pages
         /// <summary>
         /// The delete appbar menu item.
         /// </summary>
-        private IApplicationBarMenuItem _deleteApplicationBarMenuItem;
+        private IApplicationBarIconButton _deleteApplicationBarIconButton;
 
         /// <summary>
         /// Creates an ItemPage instance.
@@ -50,18 +50,19 @@ namespace UriLauncher.App.Pages
             ApplicationBar.ForegroundColor = Colors.White;
 
             // add
-            ApplicationBarIconButton appBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/save.png", UriKind.Relative));
-            appBarButton.Text = AppResources.AppBarSave;
-            appBarButton.Click += (s, e) =>
+            ApplicationBarIconButton appBarAddButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/save.png", UriKind.Relative));
+            appBarAddButton.Text = AppResources.AppBarSave;
+            appBarAddButton.Click += (s, e) =>
             {
                 Save();
             };
-            ApplicationBar.Buttons.Add(appBarButton);
+            ApplicationBar.Buttons.Add(appBarAddButton);
 
             // delete
-            _deleteApplicationBarMenuItem = new ApplicationBarMenuItem(AppResources.Delete);
-            _deleteApplicationBarMenuItem.IsEnabled = false;
-            _deleteApplicationBarMenuItem.Click += (s, e) =>
+            _deleteApplicationBarIconButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/delete.png", UriKind.Relative));
+            _deleteApplicationBarIconButton.IsEnabled = false;
+            _deleteApplicationBarIconButton.Text = AppResources.Delete;
+            _deleteApplicationBarIconButton.Click += (s, e) =>
             {
                 var vm = DataContext as LaunchItemViewModel;
                 if (vm != null)
@@ -72,7 +73,7 @@ namespace UriLauncher.App.Pages
                 if (NavigationService.CanGoBack)
                     NavigationService.GoBack();
             };
-            ApplicationBar.MenuItems.Add(_deleteApplicationBarMenuItem);
+            ApplicationBar.Buttons.Add(_deleteApplicationBarIconButton);
         }
 
         /// <summary>
@@ -126,6 +127,26 @@ namespace UriLauncher.App.Pages
             LoadState();
 
             DataContext = item;
+        }
+
+        /// <summary>
+        /// Sets the page mode (edit or add).
+        /// </summary>
+        /// <param name="isEdit">TRUE for edit mode, FALSE for add mode.</param>
+        private void SetMode(bool isEditMode)
+        {
+            if (isEditMode)
+            {
+                ImageHeader.Source = new BitmapImage(new Uri("/Assets/AppBar/edit.png", UriKind.Relative));
+                TextBlockHeader.Text = AppResources.EditTitle;
+                _deleteApplicationBarIconButton.IsEnabled = true;
+            }
+            else // add mode
+            {
+                ImageHeader.Source = new BitmapImage(new Uri("/Assets/AppBar/add.png", UriKind.Relative));
+                TextBlockHeader.Text = AppResources.AddTitle;
+                _deleteApplicationBarIconButton.IsEnabled = false;
+            }
         }
 
         #region State/Tombstoning
@@ -182,24 +203,5 @@ namespace UriLauncher.App.Pages
         }
 
         #endregion
-
-        /// <summary>
-        /// Sets the page mode (edit or add).
-        /// </summary>
-        /// <param name="isEdit">TRUE for edit mode, FALSE for add mode.</param>
-        private void SetMode(bool isEditMode)
-        {
-            if (isEditMode)
-            {
-                ImageHeader.Source = new BitmapImage(new Uri("/Assets/AppBar/edit.png", UriKind.Relative));
-                TextBlockHeader.Text = AppResources.EditTitle;
-                _deleteApplicationBarMenuItem.IsEnabled = true;
-            }
-            else // add mode
-            {
-                ImageHeader.Source = new BitmapImage(new Uri("/Assets/AppBar/add.png", UriKind.Relative));
-                TextBlockHeader.Text = AppResources.AddTitle;
-            }
-        }
     }
 }

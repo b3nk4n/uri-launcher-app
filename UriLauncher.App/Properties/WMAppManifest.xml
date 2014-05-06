@@ -4,7 +4,7 @@
   <Languages xmlns="">
     <Language code="de" />
   </Languages>
-  <App xmlns="" ProductID="{7654a6fd-eb02-45bf-bc78-a24ed40dd081}" Title="URI Launcher" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="UriLauncher.App author" Description="A URI Launcher Dev Tool." Publisher="UriLauncher.App" PublisherID="{70c3e7ba-7ce5-4265-95f4-9a4e885af599}">
+  <App xmlns="" ProductID="{7654a6fd-eb02-45bf-bc78-a24ed40dd081}" Title="URI Launcher" RuntimeType="Silverlight" Version="1.1.0.0" Genre="apps.normal" Author="UriLauncher.App author" Description="A URI Launcher Dev Tool." Publisher="UriLauncher.App" PublisherID="{70c3e7ba-7ce5-4265-95f4-9a4e885af599}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
@@ -25,10 +25,13 @@
           </BackBackgroundImageURI>
           <BackTitle>
           </BackTitle>
+          <LargeBackgroundImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileLarge.png</LargeBackgroundImageURI>
+          <LargeBackContent />
+          <LargeBackBackgroundImageURI IsRelative="true" IsResource="false">
+          </LargeBackBackgroundImageURI>
           <DeviceLockImageURI>
           </DeviceLockImageURI>
-          <HasLarge>
-          </HasLarge>
+          <HasLarge>True</HasLarge>
         </TemplateFlip>
       </PrimaryToken>
     </Tokens>

@@ -115,12 +115,15 @@ namespace UriLauncher.App.ViewModels
         /// <param name="uriString">The new uri string.</param>
         public void Update(string title, string uriString)
         {
-            // verify the data has changed
-            if (Title == title && uriString == Uri.OriginalString)
+            var oldUriString = (Uri == null) ? null : string.Copy(Uri.OriginalString);
+            bool wasPinned = IsPinned;
+
+            if (!LaunchItem.IsUriValid(uriString))
                 return;
 
-            bool wasPinned = IsPinned;
-            var oldUriString = (Uri == null) ? null : string.Copy(Uri.OriginalString);
+            // verify the data has changed
+            if (Title == title && uriString == oldUriString)
+                return;
 
             Title = title;
             Uri = new Uri(uriString, UriKind.Absolute);

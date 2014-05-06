@@ -29,8 +29,10 @@ namespace UriLauncher.App
         /// </summary>
         public App()
         {
+#if !DEBUG
             // Initialize BugSense
             BugSenseHandler.Instance.InitAndStartSession(new ExceptionManager(Current), RootFrame, "57c04a48");
+#endif
 
             // Standard-XAML-Initialisierung
             InitializeComponent();
