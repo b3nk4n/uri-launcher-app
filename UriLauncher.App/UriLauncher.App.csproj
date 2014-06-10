@@ -183,10 +183,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="AdDuplex.WindowsPhone, Version=2.8.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\AdDuplex.WindowsPhone.dll</HintPath>
-    </Reference>
     <Reference Include="BugSense-WP8">
       <HintPath>..\packages\BugSense.WP8.3.6.4.0\lib\wp8\BugSense-WP8.dll</HintPath>
     </Reference>
