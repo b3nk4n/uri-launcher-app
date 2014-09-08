@@ -49,7 +49,7 @@ namespace UriLauncher.App.Pages
                 return;
 
             // fire startup events
-            StartupActionManager.Instance.Fire();
+            StartupActionManager.Instance.Fire(e);
 
             // refresh data.
             var vm = DataContext as MainViewModel;

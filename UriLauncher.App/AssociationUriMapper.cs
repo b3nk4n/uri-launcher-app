@@ -15,16 +15,11 @@ namespace UriLauncher.App
         {
             tempUri = System.Net.HttpUtility.UrlDecode(uri.ToString());
 
-            // URI association launch for contoso.
-            /*if (tempUri.Contains("launcher:ShowProducts?CategoryID="))
+            // URI association launch for launcher itself (else it caused an InvalidOperationException: No XAML was found at the location '/Protocol'.)
+            if (tempUri.Contains("/Protocol"))
             {
-                // Get the category ID (after "CategoryID=").
-                int categoryIdIndex = tempUri.IndexOf("CategoryID=") + 11;
-                string categoryId = tempUri.Substring(categoryIdIndex);
-
-                // Map the show products request to ShowProducts.xaml
-                return new Uri("/ShowProducts.xaml?CategoryID=" + categoryId, UriKind.Relative);
-            }*/
+                return new Uri(string.Format("/Pages/MainPage.xaml"), UriKind.Relative);
+            }
 
             // Otherwise perform normal launch.
             return uri;
